@@ -7,6 +7,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class SubscriptionService {
 
+    @Autowired
+    private EventRepo evtRepo;
+
+    @Autowired
+    private UserRepo userRepo;
+
+    @Autowired
+    private SubscriptionRepo subRepo;
+
+
+
+
     public Subscription createNewSubscription(String eventName, User user) {
 
     }
