@@ -28,7 +28,7 @@ public class EventController {
     public ResponseEntity<Event> getEventByPrettyName(@PathVariable String prettyName) {
 
         Event evt = service.getByPrettyName(prettyName);
-        if (evt != null) { //evento existe no banco de dados
+        if (evt != null) {
             return ResponseEntity.ok().body(evt);
         }
             return ResponseEntity.notFound().build();
