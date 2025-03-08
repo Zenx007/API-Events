@@ -25,6 +25,10 @@ public class SubscriptionService {
         user= userRepo.save(user);
 
         Subscription subs = new Subscription();
-        return subs;
+        subs.setEvent(evt);
+        subs.setSubscriber(userRec);
+
+        Subscription res = subRepo.save(subs);
+        return res;
     }
 }
