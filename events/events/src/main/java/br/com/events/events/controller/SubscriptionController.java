@@ -28,4 +28,5 @@ public class SubscriptionController {
         }
         return ResponseEntity.badRequest().build();
     }
+    }
 }
