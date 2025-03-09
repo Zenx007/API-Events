@@ -1,5 +1,7 @@
 package br.com.events.events.controller;
 
+import br.com.events.events.dto.ErrorMessage;
+import br.com.events.events.exception.EventNotFoundException;
 import br.com.events.events.model.Subscription;
 import br.com.events.events.model.User;
 import br.com.events.events.service.SubscriptionService;
@@ -29,4 +31,3 @@ public class SubscriptionController {
         return ResponseEntity.badRequest().build();
     }
     }
-}
