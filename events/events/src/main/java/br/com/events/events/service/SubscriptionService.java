@@ -1,5 +1,6 @@
 package br.com.events.events.service;
 
+import br.com.events.events.dto.SubscriptionConflictException;
 import br.com.events.events.exception.EventNotFoundException;
 import br.com.events.events.model.Event;
 import br.com.events.events.model.Subscription;
