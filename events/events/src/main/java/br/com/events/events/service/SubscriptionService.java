@@ -37,6 +37,12 @@ public class SubscriptionService {
         subs.setEvent(evt);
         subs.setSubscriber(userRec);
 
+        Subscription tmpSub = subRepo.findByEventAndSubscriber(evt, userRec);
+        if (tmpSub != null) {
+            throw new SubscriptionConflictException("Já existe inscrição para o usuário " + userRec.getName());
+
+        }
+
         Subscription res = subRepo.save(subs);
         return res;
     }
