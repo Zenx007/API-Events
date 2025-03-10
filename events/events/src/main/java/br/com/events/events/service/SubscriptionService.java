@@ -32,7 +32,6 @@ public class SubscriptionService {
         if (userRec == null) {
             userRec = userRepo.save(user);
         }
-        user= userRepo.save(user);
 
         Subscription subs = new Subscription();
         subs.setEvent(evt);
