@@ -28,6 +28,9 @@ public class SubscriptionController {
         } catch(EventNotFoundException ex) {
             return ResponseEntity.status(404).body(new ErrorMessage(ex.getMessage()));
         }
+        catch (SubscriptionConflictException ex) {
+            return ResponseEntity.status(409).body(new ErrorMessage(ex.getMessage()));
+        }
         return ResponseEntity.badRequest().build();
     }
     }
