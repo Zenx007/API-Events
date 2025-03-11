@@ -1,10 +1,10 @@
 package br.com.events.events.controller;
 
 import br.com.events.events.dto.ErrorMessage;
-import br.com.events.events.dto.SubscriptionConflictException;
+import br.com.events.events.exception.SubscriptionConflictException;
 import br.com.events.events.dto.SubscriptionResponse;
 import br.com.events.events.exception.EventNotFoundException;
-import br.com.events.events.model.Subscription;
+import br.com.events.events.exception.UserIndicadorNotFoundException;
 import br.com.events.events.model.User;
 import br.com.events.events.service.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +20,11 @@ public class SubscriptionController {
     @Autowired
     private SubscriptionService service;
 
-    @PostMapping({"/subscription/{prettyName}", "subscription/{prettyName}/{userId}"})
-    public ResponseEntity<?> createSubscription(@PathVariable String prettyName, @RequestBody User subscriber, @PathVariable (required=false) Integer userId)
+    @PostMapping({"/subscription/{prettyName}", "/subscription/{prettyName}/{userId}"})
+    public ResponseEntity<?> createSubscription(@PathVariable String prettyName, @RequestBody User subscriber, @PathVariable(required=false) Integer userId)
     {
         try {
-            SubscriptionResponse res = service.createNewSubscription(prettyName, subscriber, useId);
+            SubscriptionResponse res = service.createNewSubscription(prettyName, subscriber, userId);
             if (res != null) {
                 return ResponseEntity.ok(res);
             }
@@ -33,6 +33,9 @@ public class SubscriptionController {
         }
         catch (SubscriptionConflictException ex) {
             return ResponseEntity.status(409).body(new ErrorMessage(ex.getMessage()));
+        }
+        catch (UserIndicadorNotFoundException ex) {
+            return ResponseEntity.status(404).body(new ErrorMessage(ex.getMessage()));
         }
         return ResponseEntity.badRequest().build();
     }
