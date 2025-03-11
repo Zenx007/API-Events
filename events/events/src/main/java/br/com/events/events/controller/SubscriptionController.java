@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class SubscriptionController {
-
     @Autowired
     private SubscriptionService service;
 
@@ -34,7 +33,7 @@ public class SubscriptionController {
         catch (SubscriptionConflictException ex) {
             return ResponseEntity.status(409).body(new ErrorMessage(ex.getMessage()));
         }
-        catch (UserIndicadorNotFoundException ex) {
+        catch(UserIndicadorNotFoundException ex){
             return ResponseEntity.status(404).body(new ErrorMessage(ex.getMessage()));
         }
         return ResponseEntity.badRequest().build();
