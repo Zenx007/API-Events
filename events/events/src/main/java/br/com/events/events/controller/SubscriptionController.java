@@ -1,6 +1,8 @@
 package br.com.events.events.controller;
 
 import br.com.events.events.dto.ErrorMessage;
+import br.com.events.events.dto.SubscriptionConflictException;
+import br.com.events.events.dto.SubscriptionResponse;
 import br.com.events.events.exception.EventNotFoundException;
 import br.com.events.events.model.Subscription;
 import br.com.events.events.model.User;
@@ -18,10 +20,11 @@ public class SubscriptionController {
     @Autowired
     private SubscriptionService service;
 
-    @PostMapping("/subscription/{prettyName}")
-    public ResponseEntity<?> createSubscription(@PathVariable String prettyName, @RequestBody User subscriber) {
+    @PostMapping({"/subscription/{prettyName}", "subscription/{prettyName}/{userId}"})
+    public ResponseEntity<?> createSubscription(@PathVariable String prettyName, @RequestBody User subscriber, @PathVariable (required=false) Integer userId)
+    {
         try {
-            Subscription res = service.createNewSubscription(prettyName, subscriber);
+            SubscriptionResponse res = service.createNewSubscription(prettyName, subscriber, useId);
             if (res != null) {
                 return ResponseEntity.ok(res);
             }
