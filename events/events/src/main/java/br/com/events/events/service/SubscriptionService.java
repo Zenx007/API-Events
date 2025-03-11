@@ -1,8 +1,9 @@
 package br.com.events.events.service;
 
-import br.com.events.events.dto.SubscriptionConflictException;
+import br.com.events.events.exception.SubscriptionConflictException;
 import br.com.events.events.dto.SubscriptionResponse;
 import br.com.events.events.exception.EventNotFoundException;
+import br.com.events.events.exception.UserIndicadorNotFoundException;
 import br.com.events.events.model.Event;
 import br.com.events.events.model.Subscription;
 import br.com.events.events.model.User;
@@ -24,7 +25,7 @@ public class SubscriptionService {
     @Autowired
     private SubscriptionRepo subRepo;
 
-    public SubscriptionResponse createNewSubscription(String eventName, User user) {
+    public SubscriptionResponse createNewSubscription(String eventName, User user, Integer userId) {
         Event evt = evtRepo.findByPrettyName(eventName);
         if (evt == null) {
             throw new EventNotFoundException("Evento " + eventName + " não existe");
@@ -33,10 +34,15 @@ public class SubscriptionService {
         if (userRec == null) {
             userRec = userRepo.save(user);
         }
+        User indicador = userRepo.findById(userId).orElse(null);
+        if (indicador==null) {
+            throw new UserIndicadorNotFoundException("Usuario " + userId +" indicador não existe");
+        }
 
         Subscription subs = new Subscription();
         subs.setEvent(evt);
         subs.setSubscriber(userRec);
+        subs.setIndication(indicador);
 
         Subscription tmpSub = subRepo.findByEventAndSubscriber(evt, userRec);
         if (tmpSub != null) {
@@ -46,6 +52,6 @@ public class SubscriptionService {
 
         Subscription res = subRepo.save(subs);
 
-        return new SubscriptionResponse(res.getSubscriptionNumber(),"http://codecraft.com" + res.getEvent().getPrettyName() +"/" + res.getSubscriber().getId());
+        return new SubscriptionResponse(res.getSubscriptionNumber(),"http://codecraft.com/subscription/" + res.getEvent().getPrettyName() +"/" + res.getSubscriber().getId());
     }
 }
