@@ -18,30 +18,27 @@ public class SubscriptionController {
     private SubscriptionService service;
 
     @PostMapping({"/subscription/{prettyName}", "/subscription/{prettyName}/{userId}"})
-    public ResponseEntity<?> createSubscription(@PathVariable String prettyName, @RequestBody User subscriber, @PathVariable(required=false) Integer userId)
-    {
+    public ResponseEntity<?> createSubscription(@PathVariable String prettyName, @RequestBody User subscriber, @PathVariable(required = false) Integer userId) {
         try {
             SubscriptionResponse res = service.createNewSubscription(prettyName, subscriber, userId);
             if (res != null) {
                 return ResponseEntity.ok(res);
             }
-        } catch(EventNotFoundException ex) {
+        } catch (EventNotFoundException ex) {
             return ResponseEntity.status(404).body(new ErrorMessage(ex.getMessage()));
-        }
-        catch (SubscriptionConflictException ex) {
+        } catch (SubscriptionConflictException ex) {
             return ResponseEntity.status(409).body(new ErrorMessage(ex.getMessage()));
-        }
-        catch(UserIndicadorNotFoundException ex){
+        } catch (UserIndicadorNotFoundException ex) {
             return ResponseEntity.status(404).body(new ErrorMessage(ex.getMessage()));
         }
         return ResponseEntity.badRequest().build();
     }
+
     @GetMapping("/subscription/{prettyName}/ranking")
-    public ResponseEntity<?>generateRankingByEvent(@PathVariable String prettyName) {
+    public ResponseEntity<?> generateRankingByEvent(@PathVariable String prettyName) {
         try {
-            return ResponseEntity.ok(service.getCompleteRanking(prettyName));
-        }
-        catch (EventNotFoundException e) {
+            return ResponseEntity.ok(service.getCompleteRanking(prettyName).subList(0, 3));
+        } catch (EventNotFoundException e) {
             return ResponseEntity.status(404).body(new ErrorMessage(e.getMessage()));
 
         }
@@ -57,4 +54,4 @@ public class SubscriptionController {
             return ResponseEntity.status(404).body(new ErrorMessage(ex.getMessage()));
         }
     }
-    }
+}
