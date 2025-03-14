@@ -5,14 +5,12 @@ import br.com.events.events.exception.SubscriptionConflictException;
 import br.com.events.events.dto.SubscriptionResponse;
 import br.com.events.events.exception.EventNotFoundException;
 import br.com.events.events.exception.UserIndicadorNotFoundException;
+import br.com.events.events.model.Event;
 import br.com.events.events.model.User;
 import br.com.events.events.service.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class SubscriptionController {
