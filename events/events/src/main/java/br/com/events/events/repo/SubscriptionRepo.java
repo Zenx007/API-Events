@@ -1,10 +1,15 @@
 package br.com.events.events.repo;
 
+import br.com.events.events.dto.SubscriptionRankingItem;
 import br.com.events.events.model.Event;
 import br.com.events.events.model.Subscription;
 
 import br.com.events.events.model.User;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
 
 public interface SubscriptionRepo extends CrudRepository<Subscription, Integer> {
     public Subscription findByEventAndSubscriber(Event evt, User user);
