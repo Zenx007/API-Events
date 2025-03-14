@@ -38,4 +38,14 @@ public class SubscriptionController {
         }
         return ResponseEntity.badRequest().build();
     }
+    @GetMapping("/subscription/{prettyName}/ranking")
+    public ResponseEntity<?>generateRankingByEvent(@PathVariable String prettyName) {
+        try {
+            return ResponseEntity.ok(service.getCompleteRanking(prettyName));
+        }
+        catch (EventNotFoundException e) {
+            return ResponseEntity.status(404).body(new ErrorMessage(e.getMessage()));
+
+        }
+    }
     }
