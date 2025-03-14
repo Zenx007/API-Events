@@ -1,5 +1,6 @@
 package br.com.events.events.service;
 
+import br.com.events.events.dto.SubscriptionRankingByUser;
 import br.com.events.events.dto.SubscriptionRankingItem;
 import br.com.events.events.exception.SubscriptionConflictException;
 import br.com.events.events.dto.SubscriptionResponse;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 @Service
 public class SubscriptionService {
@@ -66,6 +68,7 @@ public class SubscriptionService {
             throw new EventNotFoundException("Ranking do evento " + prettyName + " não existe" );
         }
         return subRepo.generateRanking(evt.getEventId());
+    }
 
     public SubscriptionRankingByUser getRankingByUser(String prettyName, Integer userId) {
         List<SubscriptionRankingItem> ranking = getCompleteRanking(prettyName);
