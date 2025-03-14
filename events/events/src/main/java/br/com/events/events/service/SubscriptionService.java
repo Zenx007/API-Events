@@ -57,4 +57,12 @@ public class SubscriptionService {
 
         return new SubscriptionResponse(res.getSubscriptionNumber(),"http://codecraft.com/subscription/" + res.getEvent().getPrettyName() +"/" + res.getSubscriber().getId());
     }
+    public List<SubscriptionRankingItem> getCompleteRanking(String prettyName) {
+        Event evt = evtRepo.findByPrettyName(prettyName);
+        if (evt == null) {
+            throw new EventNotFoundException("Ranking do evento " + prettyName + " não existe" )
+        }
+        return subRepo.generateRanking(evt.getEventId());
+
+    }
 }
