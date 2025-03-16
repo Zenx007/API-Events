@@ -24,7 +24,7 @@ This **Spring Boot API** allows you to create and manage events, subscribe users
 ## Technologies
 
 - **Java 21**
-- **Spring Boot 3.x**
+- **Spring Boot 3.4.3**
 - **Spring Data JPA**
 - **MySQL Database** (or any relational database of your choice)
 - **Maven** (for dependency management)
